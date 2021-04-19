@@ -4,13 +4,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { StrictMode } from "react";
+import { VideoListProvider } from "./context/video-listing";
+import { VideoPageProvider } from "./context/video-page";
+import { LikedListProvider } from "./context/liked-listing";
+import { HistoryListProvider } from "./context/history-listing";
 
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(
+  <StrictMode>
+    <VideoListProvider>
+      <HistoryListProvider>
+        <LikedListProvider>
+          <VideoPageProvider>
+            <App />
+          </VideoPageProvider>
+        </LikedListProvider>
+      </HistoryListProvider>
+    </VideoListProvider>
+  </StrictMode>,
+  rootElement
+);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
