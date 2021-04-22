@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 import { StrictMode } from "react";
 import { VideoListProvider } from "./context/video-listing";
 import { VideoPageProvider } from "./context/video-page";
 import { LikedListProvider } from "./context/liked-listing";
 import { HistoryListProvider } from "./context/history-listing";
-
+import { PlaylistProvider } from "./context/playlist-listing";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
@@ -17,9 +17,11 @@ ReactDOM.render(
     <VideoListProvider>
       <HistoryListProvider>
         <LikedListProvider>
-          <VideoPageProvider>
-            <App />
-          </VideoPageProvider>
+          <PlaylistProvider>
+            <VideoPageProvider>
+              <App />
+            </VideoPageProvider>
+          </PlaylistProvider>
         </LikedListProvider>
       </HistoryListProvider>
     </VideoListProvider>

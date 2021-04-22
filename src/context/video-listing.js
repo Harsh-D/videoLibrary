@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer, useState } from "react";
 import { useHistoryList } from "./history-listing";
+import { usePlaylist } from "./playlist-listing";
 
 const VideoListContext = createContext();
 
@@ -16,6 +17,30 @@ export function VideoListProvider({ children }) {
 
   function VideoListing() {
     const { dispatch: historyListDispatch } = useHistoryList();
+    const [showAddToPlaylistModal, setShowAddToPlaylistModal] = useState(false);
+    const { listOfPlaylists, dispatch: playlistDispatch } = usePlaylist();
+
+    function isVideoAddedToPlaylist(playlistId, videoId) {
+      const playlist = listOfPlaylists.find((item) => item.id === playlistId);
+      console.log("list of playlist", listOfPlaylists);
+      console.log("check playlist ",playlist);
+      if (playlist.videos.find((item) => item.id === videoId)) return true;
+      return false;
+    }
+
+    function addedToPlaylistHandler(playlistId, videoObj, isChecked){
+      const playlist = listOfPlaylists.find((item) => item.id === playlistId);
+      if(isChecked){
+        if(!playlist.videos.find((item) => item.id === videoObj.id)){
+          return playlistDispatch({
+            type: "ADD_TO_PLAYLIST",
+            payload: {videoObj, playlistId}
+          });
+        }
+      }
+
+    }
+
     return (
       <div className="component-container card-div">
         {videosInList.map((item) => (
@@ -26,7 +51,7 @@ export function VideoListProvider({ children }) {
             style={{
               border: "1px solid",
               margin: "1rem",
-              padding: "1rem"
+              padding: "1rem",
             }}
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
@@ -39,9 +64,31 @@ export function VideoListProvider({ children }) {
             >
               Open
             </button>
-            <button onClick={() => console.log("clicked add")}>
+            <button onClick={() => setShowAddToPlaylistModal(true)}>
               Add to Playlist
             </button>
+            {showAddToPlaylistModal && (
+              <div class="modal" style={{ display: "block" }}>
+                <div class="modal-content">
+                  <span
+                    class="close"
+                    onClick={() => setShowAddToPlaylistModal(false)}
+                  >
+                    &times;
+                  </span>
+                  {listOfPlaylists.map((obj) => (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={isVideoAddedToPlaylist(obj.id,item.id)}
+                        onChange={(val)=> addedToPlaylistHandler(obj.id, item, val.target.checked)}
+                      />
+                      {obj.title}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -60,26 +107,26 @@ const videosInList = [
   {
     id: 1,
     url: "https://www.youtube.com/embed/tgbNymZ7vqY",
-    imageUrl: "https://i.ytimg.com/vi/tgbNymZ7vqY/maxresdefault.jpg"
+    imageUrl: "https://i.ytimg.com/vi/tgbNymZ7vqY/maxresdefault.jpg",
   },
   {
     id: 2,
     url: "https://www.youtube.com/embed/kPyP1hx-QCU",
-    imageUrl: "https://i.ytimg.com/vi/kPyP1hx-QCU/mqdefault.jpg"
+    imageUrl: "https://i.ytimg.com/vi/kPyP1hx-QCU/mqdefault.jpg",
   },
   {
     id: 3,
     url: "https://www.youtube.com/embed/xnSew-tCuPo",
-    imageUrl: "https://i.ytimg.com/vi/xnSew-tCuPo/mqdefault.jpg"
+    imageUrl: "https://i.ytimg.com/vi/xnSew-tCuPo/mqdefault.jpg",
   },
   {
     id: 4,
     url: "https://www.youtube.com/embed/LSkaoMIxjv0",
-    imageUrl: "https://i.ytimg.com/vi/LSkaoMIxjv0/mqdefault.jpg"
+    imageUrl: "https://i.ytimg.com/vi/LSkaoMIxjv0/mqdefault.jpg",
   },
   {
     id: 5,
     url: "https://www.youtube.com/embed/A-IzCeM6C-k",
-    imageUrl: "https://i.ytimg.com/vi/A-IzCeM6C-k/mqdefault.jpg"
-  }
+    imageUrl: "https://i.ytimg.com/vi/A-IzCeM6C-k/mqdefault.jpg",
+  },
 ];
