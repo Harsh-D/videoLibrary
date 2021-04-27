@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useHistoryList } from "./history-listing";
 import { usePlaylist } from "./playlist-listing";
 
@@ -9,36 +9,37 @@ export function useVideoList() {
 }
 
 export function VideoListProvider({ children }) {
-  const [state, dispatch] = useReducer(videoListReducer, { videosInList });
+  //const [state, dispatch] = useReducer(videoListReducer, { videosInList });
   const [route, setRoute] = useState("videos");
   const [itemToRender, setItemToRender] = useState();
 
-  function videoListReducer(state, action) {}
+  //function videoListReducer(state, action) {}
 
   function VideoListing() {
     const { dispatch: historyListDispatch } = useHistoryList();
     const [showAddToPlaylistModal, setShowAddToPlaylistModal] = useState(false);
     const { listOfPlaylists, dispatch: playlistDispatch } = usePlaylist();
 
+    const [addVideoToPlaylist, setAddVideoToPlaylist] = useState();
+
     function isVideoAddedToPlaylist(playlistId, videoId) {
       const playlist = listOfPlaylists.find((item) => item.id === playlistId);
       console.log("list of playlist", listOfPlaylists);
-      console.log("check playlist ",playlist);
+      console.log("check playlist ", playlist);
       if (playlist.videos.find((item) => item.id === videoId)) return true;
       return false;
     }
 
-    function addedToPlaylistHandler(playlistId, videoObj, isChecked){
+    function addedToPlaylistHandler(playlistId, videoObj, isChecked) {
       const playlist = listOfPlaylists.find((item) => item.id === playlistId);
-      if(isChecked){
-        if(!playlist.videos.find((item) => item.id === videoObj.id)){
+      if (isChecked) {
+        if (!playlist.videos.find((item) => item.id === videoObj.id)) {
           return playlistDispatch({
             type: "ADD_TO_PLAYLIST",
-            payload: {videoObj, playlistId}
+            payload: { videoObj, playlistId },
           });
         }
       }
-
     }
 
     return (
@@ -49,9 +50,10 @@ export function VideoListProvider({ children }) {
             onClick={() => console.log("clicked")}
             className="card"
             style={{
-              border: "1px solid",
+              border: "1px ",
               margin: "1rem",
               padding: "1rem",
+              boxShadow: "5px 10px 5px #F3F4F6"
             }}
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
@@ -64,33 +66,40 @@ export function VideoListProvider({ children }) {
             >
               Open
             </button>
-            <button onClick={() => setShowAddToPlaylistModal(true)}>
+            <button
+              onClick={() => {
+                setShowAddToPlaylistModal(true);
+                setAddVideoToPlaylist(item);
+              }}
+            >
               Add to Playlist
             </button>
-            {showAddToPlaylistModal && (
-              <div class="modal" style={{ display: "block" }}>
-                <div class="modal-content">
-                  <span
-                    class="close"
-                    onClick={() => setShowAddToPlaylistModal(false)}
-                  >
-                    &times;
-                  </span>
-                  {listOfPlaylists.map((obj) => (
-                    <div>
-                      <input
-                        type="checkbox"
-                        checked={isVideoAddedToPlaylist(obj.id,item.id)}
-                        onChange={(val)=> addedToPlaylistHandler(obj.id, item, val.target.checked)}
-                      />
-                      {obj.title}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         ))}
+        {showAddToPlaylistModal && (
+          <div className="modal" style={{ display: "block" }}>
+            <div className="modal-content">
+              <span
+                className="close"
+                onClick={() => setShowAddToPlaylistModal(false)}
+              >
+                &times;
+              </span>
+              {listOfPlaylists.map((obj) => (
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={isVideoAddedToPlaylist(obj.id, addVideoToPlaylist.id)}
+                    onChange={(val) =>
+                      addedToPlaylistHandler(obj.id, addVideoToPlaylist, val.target.checked)
+                    }
+                  />
+                  {obj.title}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

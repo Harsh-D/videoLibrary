@@ -13,7 +13,7 @@ export function PlaylistProvider({ children }) {
     listOfPlaylists,
   });
 
-  const { setItemToRender, setRoute } = useVideoList();
+  const {  setRoute } = useVideoList();
   const [playlistToRender, setPlaylistToRender] = useState({});
   const { dispatch: historyListDispatch } = useHistoryList();
 
@@ -32,10 +32,10 @@ export function PlaylistProvider({ children }) {
         </button>
         <div className="component-container card-div">
           {showCreatePlaylistModal && (
-            <div class="modal" style={{ display: "block" }}>
-              <div class="modal-content">
+            <div className="modal" style={{ display: "block" }}>
+              <div className="modal-content">
                 <span
-                  class="close"
+                  className="close"
                   onClick={() => setShowCreatePlaylistModal(false)}
                 >
                   &times;
@@ -64,9 +64,10 @@ export function PlaylistProvider({ children }) {
               key={item.id}
               className="card"
               style={{
-                border: "1px solid",
+                border: "1px ",
                 margin: "1rem",
                 padding: "1rem",
+                boxShadow: "5px 10px 5px #F3F4F6",
               }}
             >
               {item.title} <br />
@@ -87,6 +88,7 @@ export function PlaylistProvider({ children }) {
   }
 
   function Playlist() {
+    const { setItemToRender, setRoute } = useVideoList();
     return (
       <div className="component-container card-div">
         {playlistToRender.videos.map((item) => (
@@ -94,9 +96,10 @@ export function PlaylistProvider({ children }) {
             key={item.id}
             className="card"
             style={{
-              border: "1px solid",
+              border: "1px ",
               margin: "1rem",
               padding: "1rem",
+              boxShadow: "5px 10px 5px #F3F4F6"
             }}
           >
             <img
@@ -109,8 +112,8 @@ export function PlaylistProvider({ children }) {
             <button
               onClick={() => {
                 historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
-                setRoute("video");
                 setItemToRender(item);
+                setRoute("video");   
               }}
             >
               {" "}
@@ -162,7 +165,7 @@ function playlistReducer(state, action) {
         (item) => item.id === action.payload.playlistId
       );
       console.log("List of playlists", listOfPlaylists);
-      console.log(playlist);
+      console.log("current playlist", playlist);
       if (
         playlist.videos.filter((item) => item.id === action.payload.videoObj.id)
           .length > 0

@@ -1,6 +1,4 @@
-import logo from "./logo.svg";
 import "./App.css";
-
 import "./styles.css";
 import { useVideoList } from "./context/video-listing";
 import { useVideoPage } from "./context/video-page";
@@ -13,7 +11,7 @@ function App() {
   const { Video } = useVideoPage();
   const { LikedListing } = useLikedList();
   const { HistoryListing } = useHistoryList();
-  const { Playlists } = usePlaylist();
+  const { Playlists, Playlist } = usePlaylist();
 
   return (
     <div className="App">
@@ -36,8 +34,8 @@ function App() {
           </li>
         </ul>
       </nav>
-      <div className="SideBar">
-        <ul className="">
+      <div className="sideBar">
+        <ul className="sideBar">
           <li className="" onClick={() => setRoute("videos")}>
             VIDEOS
           </li>
@@ -54,6 +52,7 @@ function App() {
         {route === "Liked" && <LikedListing />}
         {route === "History" && <HistoryListing />}
         {route === "Playlists" && <Playlists />}
+        {route === "Playlist" && <Playlist />}
       </div>
     </div>
   );

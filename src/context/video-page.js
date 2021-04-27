@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext} from "react";
 import { useVideoList } from "./video-listing";
 import { useLikedList } from "./liked-listing";
 
@@ -11,7 +11,7 @@ export function useVideoPage() {
 export function VideoPageProvider({ children }) {
   function Video(id) {
     const { itemToRender, setRoute } = useVideoList();
-    const { likedVideos, dispatch: likedVideosDispatch } = useLikedList();
+    const { dispatch: likedVideosDispatch } = useLikedList();
     return (
       <div className="component-container card-div">
         Video
@@ -20,9 +20,10 @@ export function VideoPageProvider({ children }) {
           onClick={() => console.log("clicked")}
           className="card"
           style={{
-            border: "1px solid",
+            border: "1px ",
             margin: "1rem",
-            padding: "1rem"
+            padding: "1rem",
+            boxShadow: "5px 10px 5px #F3F4F6"
           }}
         >
           <iframe
