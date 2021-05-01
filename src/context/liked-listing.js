@@ -1,5 +1,4 @@
 import { createContext, useContext, useReducer } from "react";
-
 const LikedListContext = createContext();
 
 export function useLikedList() {
@@ -24,8 +23,10 @@ export function LikedListProvider({ children }) {
             }}
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
-            <button onClick={() => {}}>Open</button>
-            <button onClick={() => console.log("clicked add")}>Unlike</button>
+            <button 
+            className="button primary-button"
+            onClick={() => {}}>Open</button>
+            <button className="button secondary-button" onClick={() => console.log("clicked add")}>Unlike</button>
           </div>
         ))}
       </div>

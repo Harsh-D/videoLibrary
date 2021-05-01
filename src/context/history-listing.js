@@ -21,12 +21,19 @@ export function HistoryListProvider({ children }) {
               border: "1px ",
               margin: "1rem",
               padding: "1rem",
-              boxShadow: "5px 10px 5px #F3F4F6"
+              boxShadow: "5px 10px 5px #F3F4F6",
             }}
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
-            <button onClick={() => {}}>Open</button>
-            <button onClick={() => console.log("clicked add")}>Unlike</button>
+            <button className="button primary-button" onClick={() => {}}>
+              Open
+            </button>
+            <button
+              className="button secondary-button"
+              onClick={() => console.log("clicked add")}
+            >
+              Unlike
+            </button>
           </div>
         ))}
       </div>
@@ -52,12 +59,12 @@ function historyListReducer(state, action) {
           .length > 0
       ) {
         return {
-          ...state
+          ...state,
         };
       }
       return {
         ...state,
-        watchedVideos: state.watchedVideos.concat(action.payload)
+        watchedVideos: state.watchedVideos.concat(action.payload),
       };
     default:
       return { ...state };

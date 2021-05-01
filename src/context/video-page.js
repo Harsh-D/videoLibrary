@@ -33,8 +33,8 @@ export function VideoPageProvider({ children }) {
             height="400vh"
             src={itemToRender.url}
           ></iframe>
-          <button onClick={() => setRoute("videos")}>Back</button>
           <button
+            className="button primary-button"
             onClick={() =>
               likedVideosDispatch({
                 type: "ADD_TO_LIKED_VIDEOS",
@@ -44,6 +44,8 @@ export function VideoPageProvider({ children }) {
           >
             Like
           </button>
+          <button className="button secondary-button" onClick={() => setRoute("videos")}>Back</button>
+          
         </div>
       </div>
     );

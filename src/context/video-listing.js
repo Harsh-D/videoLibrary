@@ -58,6 +58,7 @@ export function VideoListProvider({ children }) {
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
             <button
+              className="button primary-button"
               onClick={() => {
                 historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
                 setRoute("video");
@@ -67,6 +68,7 @@ export function VideoListProvider({ children }) {
               Open
             </button>
             <button
+            className="button secondary-button"
               onClick={() => {
                 setShowAddToPlaylistModal(true);
                 setAddVideoToPlaylist(item);
@@ -105,7 +107,7 @@ export function VideoListProvider({ children }) {
   }
   return (
     <VideoListContext.Provider
-      value={{ videosInList, VideoListing, route, setRoute, itemToRender }}
+      value={{ videosInList, VideoListing, route, setRoute, itemToRender,setItemToRender }}
     >
       {children}
     </VideoListContext.Provider>
