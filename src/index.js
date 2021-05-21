@@ -10,21 +10,24 @@ import { VideoPageProvider } from "./context/video-page";
 import { LikedListProvider } from "./context/liked-listing";
 import { HistoryListProvider } from "./context/history-listing";
 import { PlaylistProvider } from "./context/playlist-listing";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
-    <VideoListProvider>
-      <HistoryListProvider>
-        <LikedListProvider>
-          <PlaylistProvider>
-            <VideoPageProvider>
-              <App />
-            </VideoPageProvider>
-          </PlaylistProvider>
-        </LikedListProvider>
-      </HistoryListProvider>
-    </VideoListProvider>
+    <Router>
+      <VideoListProvider>
+        <HistoryListProvider>
+          <LikedListProvider>
+            <PlaylistProvider>
+              <VideoPageProvider>
+                <App />
+              </VideoPageProvider>
+            </PlaylistProvider>
+          </LikedListProvider>
+        </HistoryListProvider>
+      </VideoListProvider>
+    </Router>
   </StrictMode>,
   rootElement
 );

@@ -2,6 +2,9 @@ import { createContext, useContext, useReducer, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useVideoList } from "./video-listing";
 import { useHistoryList } from "./history-listing";
+import { NavLink } from "react-router-dom";
+import "../styles.css";
+
 const PlaylistContext = createContext();
 
 export function usePlaylist() {
@@ -13,14 +16,13 @@ export function PlaylistProvider({ children }) {
     listOfPlaylists,
   });
 
-  const {  setRoute } = useVideoList();
+  const { setRoute } = useVideoList();
   const [playlistToRender, setPlaylistToRender] = useState({});
   const { dispatch: historyListDispatch } = useHistoryList();
 
   function Playlists() {
-    const [showCreatePlaylistModal, setShowCreatePlaylistModal] = useState(
-      false
-    );
+    const [showCreatePlaylistModal, setShowCreatePlaylistModal] =
+      useState(false);
     const [newPlaylistName, setNewPlaylistName] = useState("");
     return (
       <>
@@ -73,12 +75,14 @@ export function PlaylistProvider({ children }) {
               {item.title} <br />
               Number of videos: {item.videos.length} <br />
               <button
+                className="button primary-button"
                 onClick={() => {
                   setPlaylistToRender(item);
-                  setRoute("Playlist");
                 }}
               >
-                Open playlist
+                <NavLink to="/Playlist" className="NavElement">
+                  Open playlist
+                </NavLink>
               </button>
             </div>
           ))}
@@ -99,7 +103,7 @@ export function PlaylistProvider({ children }) {
               border: "1px ",
               margin: "1rem",
               padding: "1rem",
-              boxShadow: "5px 10px 5px #F3F4F6"
+              boxShadow: "5px 10px 5px #F3F4F6",
             }}
           >
             <img
@@ -111,20 +115,21 @@ export function PlaylistProvider({ children }) {
             />
             <button
               onClick={() => {
-                historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
                 setItemToRender(item);
-                setRoute("video");   
+                historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
+                 //setRoute("video");
               }}
             >
-              {" "}
-              Open{" "}
-            </button>{" "}
+              <NavLink end to="/video" className="NavElement">
+              Open
+                </NavLink>
+            </button>
             <button onClick={() => console.log("clicked add")}>
-              {" "}
-              Unlike{" "}
-            </button>{" "}
+              
+              Unlike
+            </button>
           </div>
-        ))}{" "}
+        ))}
       </div>
     );
   }
@@ -160,7 +165,7 @@ function playlistReducer(state, action) {
       };
 
     case "ADD_TO_PLAYLIST":
-      const listOfPlaylists = [...state.listOfPlaylists]
+      const listOfPlaylists = [...state.listOfPlaylists];
       const playlist = listOfPlaylists.find(
         (item) => item.id === action.payload.playlistId
       );
@@ -174,11 +179,10 @@ function playlistReducer(state, action) {
           ...state,
         };
       }
-      playlist.videos.push(action.payload.videoObj)
+      playlist.videos.push(action.payload.videoObj);
       return {
-
         ...state,
-        listOfPlaylists
+        listOfPlaylists,
       };
     default:
       return {

@@ -5,6 +5,7 @@ import { useVideoPage } from "./context/video-page";
 import { useLikedList } from "./context/liked-listing";
 import { useHistoryList } from "./context/history-listing";
 import { usePlaylist } from "./context/playlist-listing";
+import { Routes, Route, NavLink } from "react-router-dom";
 
 function App() {
   const { VideoListing, route, setRoute } = useVideoList();
@@ -21,38 +22,90 @@ function App() {
         </div>
         <ul className="list nav--list">
           <li className="nav-item" onClick={() => setRoute("videos")}>
-            VIDEOS
+            <NavLink
+              end
+              to="/videos"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              VIDEOS
+            </NavLink>
           </li>
           <li className="nav-item" onClick={() => setRoute("Playlists")}>
-            PLAYLISTS
+            <NavLink
+              to="/Playlists"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              PLAYLISTS
+            </NavLink>
           </li>
           <li className="nav-item" onClick={() => setRoute("Liked")}>
-            LIKED
+            <NavLink
+              to="/Liked"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              LIKED
+            </NavLink>
           </li>
           <li className="nav-item" onClick={() => setRoute("History")}>
-            HISTORY
+            <NavLink
+              to="/History"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              HISTORY
+            </NavLink>
           </li>
         </ul>
       </nav>
-      <div className="sideBar">
+      {/* <div className="sideBar">
         <ul className="sideBar">
           <li className="" onClick={() => setRoute("videos")}>
-            VIDEOS
+            <NavLink
+              to="/videos"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              VIDEOS
+            </NavLink>
           </li>
           <li className="" onClick={() => setRoute("Playlists")}>
-            PLAYLISTS
+            <NavLink
+              to="/Playlists"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
+              PLAYLISTS
+            </NavLink>
           </li>
           <li onClick={() => setRoute("Liked")}>LIKED</li>
           <li onClick={() => setRoute("History")}>HISTORY</li>
         </ul>
-      </div>
+      </div> */}
       <div className="main">
-        {route === "videos" && <VideoListing />}
-        {route === "video" && <Video />}
-        {route === "Liked" && <LikedListing />}
-        {route === "History" && <HistoryListing />}
-        {route === "Playlists" && <Playlists />}
-        {route === "Playlist" && <Playlist />}
+        <Routes>
+          <Route path="/" element={<VideoListing />} />
+          <Route path="/videos" element={<VideoListing />} />
+          <Route path="/video" element={<Video />} />
+          <Route path="/Liked" element={<LikedListing />} />
+          <Route path="/History" element={<HistoryListing />} />
+          <Route path="/Playlists" element={<Playlists />} />
+          <Route path="/Playlist" element={<Playlist />} />
+        </Routes>
       </div>
     </div>
   );

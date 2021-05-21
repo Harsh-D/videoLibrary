@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useHistoryList } from "./history-listing";
 import { usePlaylist } from "./playlist-listing";
+import { NavLink } from "react-router-dom";
 
 const VideoListContext = createContext();
 
@@ -65,7 +66,17 @@ export function VideoListProvider({ children }) {
                 setItemToRender(item);
               }}
             >
+              
+              <NavLink
+              end
+              to="/video"
+              className="NavElement"
+              activeStyle={{
+                fontWeight: "bold",
+              }}
+            >
               Open
+            </NavLink>
             </button>
             <button
             className="button secondary-button"

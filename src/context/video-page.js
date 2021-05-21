@@ -1,6 +1,7 @@
 import { createContext, useContext} from "react";
 import { useVideoList } from "./video-listing";
 import { useLikedList } from "./liked-listing";
+import {NavLink} from "react-router-dom";
 
 const VideoPageContext = createContext();
 
@@ -44,7 +45,12 @@ export function VideoPageProvider({ children }) {
           >
             Like
           </button>
-          <button className="button secondary-button" onClick={() => setRoute("videos")}>Back</button>
+          <button className="button secondary-button" onClick={() => setRoute("videos")}>
+            
+            <NavLink to="/videos" className="NavElement">
+            Back
+                </NavLink>
+            </button>
           
         </div>
       </div>
