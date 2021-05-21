@@ -1,18 +1,35 @@
 import "./App.css";
 import "./styles.css";
+import {useEffect} from "react";
 import { useVideoList } from "./context/video-listing";
 import { useVideoPage } from "./context/video-page";
 import { useLikedList } from "./context/liked-listing";
 import { useHistoryList } from "./context/history-listing";
 import { usePlaylist } from "./context/playlist-listing";
 import { Routes, Route, NavLink } from "react-router-dom";
+import axios from "axios";
 
 function App() {
-  const { VideoListing, route, setRoute } = useVideoList();
+  const { VideoListing, route, setRoute, videosInList, setVideosInList } = useVideoList();
   const { Video } = useVideoPage();
   const { LikedListing } = useLikedList();
   const { HistoryListing } = useHistoryList();
   const { Playlists, Playlist } = usePlaylist();
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axios.get(
+          "https://video-library-backend.harshdeshpande1.repl.co/videos"
+        );
+        console.log("response ",response.data.videos);
+        setVideosInList(response.data.videos);
+      } catch (error) {
+        console.error("error", error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
