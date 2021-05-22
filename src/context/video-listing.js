@@ -60,6 +60,7 @@ export function VideoListProvider({ children }) {
             }}
           >
             <img src={item.imageUrl} style={{ width: "100%" }} alt="" />
+            <p style={{color:"gray"}}>{item.name}</p>
             <button
               className="button primary-button"
               onClick={() => {

@@ -35,7 +35,7 @@ function App() {
     <div className="App">
       <nav className="nav-main nav-primary">
         <div className="nav--logo">
-          <p>Logn<sub>N</sub>Video </p>
+          <p>Log<sub>N</sub>Video </p>
         </div>
         <ul className="list nav--list">
           <li className="nav-item" onClick={() => setRoute("videos")}>
