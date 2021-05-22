@@ -15,7 +15,7 @@ export function VideoPageProvider({ children }) {
     const { dispatch: likedVideosDispatch } = useLikedList();
     return (
       <div className="component-container card-div">
-        Video
+        
         <div
           key={itemToRender.id}
           onClick={() => console.log("clicked")}
