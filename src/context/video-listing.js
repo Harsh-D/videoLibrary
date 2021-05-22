@@ -100,7 +100,7 @@ export function VideoListProvider({ children }) {
               >
                 &times;
               </span>
-              {listOfPlaylists.map((obj) => (
+              {listOfPlaylists===null? listOfPlaylists.map((obj) => (
                 <div>
                   <input
                     type="checkbox"
@@ -111,7 +111,7 @@ export function VideoListProvider({ children }) {
                   />
                   {obj.title}
                 </div>
-              ))}
+              )): "No playlists created"}
             </div>
           </div>
         )}
