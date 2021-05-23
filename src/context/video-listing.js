@@ -26,17 +26,18 @@ export function VideoListProvider({ children }) {
     const [addVideoToPlaylist, setAddVideoToPlaylist] = useState();
 
     function isVideoAddedToPlaylist(playlistId, videoId) {
-      const playlist = listOfPlaylists.find((item) => item._id === playlistId);
+      console.log(listOfPlaylists);
+      const playlist = listOfPlaylists.find((item) => item.id === playlistId);
       console.log("list of playlist", listOfPlaylists);
       console.log("check playlist ", playlist);
-      if (playlist.videos.find((item) => item._id === videoId)) return true;
+      if (playlist.videos.find((item) => item.id === videoId)) return true;
       return false;
     }
 
     function addedToPlaylistHandler(playlistId, videoObj, isChecked) {
-      const playlist = listOfPlaylists.find((item) => item._id === playlistId);
+      const playlist = listOfPlaylists.find((item) => item.id === playlistId);
       if (isChecked) {
-        if (!playlist.videos.find((item) => item.id === videoObj._id)) {
+        if (!playlist.videos.find((item) => item.id === videoObj.id)) {
           return playlistDispatch({
             type: "ADD_TO_PLAYLIST",
             payload: { videoObj, playlistId },
@@ -49,7 +50,7 @@ export function VideoListProvider({ children }) {
       <div className="component-container card-div">
         {videosInList.map((item) => (
           <div
-            key={item._id}
+            key={item.id}
             onClick={() => console.log("clicked")}
             className="card"
             style={{
@@ -101,7 +102,7 @@ export function VideoListProvider({ children }) {
               >
                 &times;
               </span>
-              {listOfPlaylists===null? listOfPlaylists.map((obj) => (
+              {listOfPlaylists.map((obj) => (
                 <div>
                   <input
                     type="checkbox"
@@ -112,7 +113,7 @@ export function VideoListProvider({ children }) {
                   />
                   {obj.title}
                 </div>
-              )): "No playlists created"}
+              ))}
             </div>
           </div>
         )}
