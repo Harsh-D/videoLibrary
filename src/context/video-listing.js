@@ -30,16 +30,25 @@ export function VideoListProvider({ children }) {
       const playlist = listOfPlaylists.find((item) => item.id === playlistId);
       console.log("list of playlist", listOfPlaylists);
       console.log("check playlist ", playlist);
-      if (playlist.videos.find((item) => item.id === videoId)) return true;
+      if (playlist.videos.find((item) => item._id === videoId)) return true;
       return false;
     }
 
     function addedToPlaylistHandler(playlistId, videoObj, isChecked) {
       const playlist = listOfPlaylists.find((item) => item.id === playlistId);
       if (isChecked) {
-        if (!playlist.videos.find((item) => item.id === videoObj.id)) {
+        if (!playlist.videos.find((item) => item._id === videoObj._id)) {
           return playlistDispatch({
             type: "ADD_TO_PLAYLIST",
+            payload: { videoObj, playlistId },
+          });
+        }
+      }
+      else if(!isChecked){
+        console.log("is not checked");
+        if (playlist.videos.find((item) => item._id === videoObj._id)) {
+          return playlistDispatch({
+            type: "REMOVE_FROM_PLAYLIST",
             payload: { videoObj, playlistId },
           });
         }
@@ -50,8 +59,8 @@ export function VideoListProvider({ children }) {
       <div className="component-container card-div">
         {videosInList.map((item) => (
           <div
-            key={item.id}
-            onClick={() => console.log("clicked")}
+            key={item._id}
+            onClick={() => console.log("clicked video div")}
             className="card"
             style={{
               border: "1px ",
@@ -106,7 +115,7 @@ export function VideoListProvider({ children }) {
                 <div>
                   <input
                     type="checkbox"
-                    checked={isVideoAddedToPlaylist(obj.id, addVideoToPlaylist.id)}
+                    checked={isVideoAddedToPlaylist(obj.id, addVideoToPlaylist._id)}
                     onChange={(val) =>
                       addedToPlaylistHandler(obj.id, addVideoToPlaylist, val.target.checked)
                     }

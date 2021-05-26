@@ -97,7 +97,7 @@ export function PlaylistProvider({ children }) {
       <div className="component-container card-div">
         {playlistToRender.videos.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className="card"
             style={{
               border: "1px ",
@@ -152,6 +152,12 @@ const listOfPlaylists = [];
 
 function playlistReducer(state, action) {
   let currentPlaylist = null;
+  const listOfPlaylists = [...state.listOfPlaylists];
+  // if(action.type==="ADD_TO_PLAYLIST" || action.type==="REMOVE_FROM_PLAYLIST"){
+  //   const playlist = listOfPlaylists.find(
+  //     (item) => item.id === action.payload.playlistId
+  //   );
+  // }
   switch (action.type) {
     case "ADD_NEW_PLAYLIST":
       currentPlaylist = {
@@ -165,14 +171,14 @@ function playlistReducer(state, action) {
       };
 
     case "ADD_TO_PLAYLIST":
-      const listOfPlaylists = [...state.listOfPlaylists];
+      //const listOfPlaylists = [...state.listOfPlaylists];
       const playlist = listOfPlaylists.find(
         (item) => item.id === action.payload.playlistId
       );
       console.log("List of playlists", listOfPlaylists);
       console.log("current playlist", playlist);
       if (
-        playlist.videos.filter((item) => item.id === action.payload.videoObj.id)
+        playlist.videos.filter((item) => item._id === action.payload.videoObj._id)
           .length > 0
       ) {
         return {
@@ -180,6 +186,20 @@ function playlistReducer(state, action) {
         };
       }
       playlist.videos.push(action.payload.videoObj);
+      return {
+        ...state,
+        listOfPlaylists,
+      };
+    case "REMOVE_FROM_PLAYLIST":
+      //const listOfPlaylists = [...state.listOfPlaylists];
+      const playlistToRemove = listOfPlaylists.find(
+        (item) => item.id === action.payload.playlistId
+      );
+      console.log("removing from playlist")
+      console.log("List of playlists", listOfPlaylists);
+      console.log("current playlist", playlistToRemove);
+      //playlist.videos.push(action.payload.videoObj);
+      playlistToRemove.videos =  playlistToRemove.videos.filter((item)=> item !== action.payload.videoObj);
       return {
         ...state,
         listOfPlaylists,
