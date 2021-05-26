@@ -11,7 +11,7 @@ export function useVideoPage() {
 
 export function VideoPageProvider({ children }) {
   function Video(id) {
-    const { itemToRender, setRoute } = useVideoList();
+    const { itemToRender } = useVideoList();
     const { dispatch: likedVideosDispatch } = useLikedList();
     return (
       <div className="component-container card-div">
@@ -45,7 +45,7 @@ export function VideoPageProvider({ children }) {
           >
             Like
           </button>
-          <button className="button secondary-button" onClick={() => setRoute("videos")}>
+          <button className="button secondary-button">
             
             <NavLink to="/videos" className="NavElement">
             Back

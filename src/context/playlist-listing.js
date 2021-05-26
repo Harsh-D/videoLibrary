@@ -15,8 +15,6 @@ export function PlaylistProvider({ children }) {
   const [state, dispatch] = useReducer(playlistReducer, {
     listOfPlaylists,
   });
-
-  const { setRoute } = useVideoList();
   const [playlistToRender, setPlaylistToRender] = useState({});
   const { dispatch: historyListDispatch } = useHistoryList();
 
@@ -92,7 +90,7 @@ export function PlaylistProvider({ children }) {
   }
 
   function Playlist() {
-    const { setItemToRender, setRoute } = useVideoList();
+    const { setItemToRender } = useVideoList();
     return (
       <div className="component-container card-div">
         {playlistToRender.videos.map((item) => (
@@ -117,7 +115,6 @@ export function PlaylistProvider({ children }) {
               onClick={() => {
                 setItemToRender(item);
                 historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
-                 //setRoute("video");
               }}
             >
               <NavLink end to="/video" className="NavElement">
@@ -153,11 +150,6 @@ const listOfPlaylists = [];
 function playlistReducer(state, action) {
   let currentPlaylist = null;
   const listOfPlaylists = [...state.listOfPlaylists];
-  // if(action.type==="ADD_TO_PLAYLIST" || action.type==="REMOVE_FROM_PLAYLIST"){
-  //   const playlist = listOfPlaylists.find(
-  //     (item) => item.id === action.payload.playlistId
-  //   );
-  // }
   switch (action.type) {
     case "ADD_NEW_PLAYLIST":
       currentPlaylist = {
@@ -196,9 +188,6 @@ function playlistReducer(state, action) {
         (item) => item.id === action.payload.playlistId
       );
       console.log("removing from playlist")
-      console.log("List of playlists", listOfPlaylists);
-      console.log("current playlist", playlistToRemove);
-      //playlist.videos.push(action.payload.videoObj);
       playlistToRemove.videos =  playlistToRemove.videos.filter((item)=> item !== action.payload.videoObj);
       return {
         ...state,

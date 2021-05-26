@@ -1,6 +1,6 @@
 import "./App.css";
 import "./styles.css";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { useVideoList } from "./context/video-listing";
 import { useVideoPage } from "./context/video-page";
 import { useLikedList } from "./context/liked-listing";
@@ -10,7 +10,7 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 function App() {
-  const { VideoListing, route, setRoute, videosInList, setVideosInList } = useVideoList();
+  const { VideoListing, setVideosInList } = useVideoList();
   const { Video } = useVideoPage();
   const { LikedListing } = useLikedList();
   const { HistoryListing } = useHistoryList();
@@ -22,7 +22,6 @@ function App() {
         const response = await axios.get(
           "https://video-library-backend.harshdeshpande1.repl.co/videos"
         );
-        console.log("response ",response.data.videos);
         setVideosInList(response.data.videos);
       } catch (error) {
         console.error("error", error);
@@ -35,10 +34,12 @@ function App() {
     <div className="App">
       <nav className="nav-main nav-primary">
         <div className="nav--logo">
-          <p>Log<sub>N</sub>Video </p>
+          <p>
+            Log<sub>N</sub>Video{" "}
+          </p>
         </div>
         <ul className="list nav--list">
-          <li className="nav-item" onClick={() => setRoute("videos")}>
+          <li className="nav-item">
             <NavLink
               end
               to="/videos"
@@ -50,7 +51,7 @@ function App() {
               VIDEOS
             </NavLink>
           </li>
-          <li className="nav-item" onClick={() => setRoute("Playlists")}>
+          <li className="nav-item">
             <NavLink
               to="/Playlists"
               className="NavElement"
@@ -61,7 +62,7 @@ function App() {
               PLAYLISTS
             </NavLink>
           </li>
-          <li className="nav-item" onClick={() => setRoute("Liked")}>
+          <li className="nav-item">
             <NavLink
               to="/Liked"
               className="NavElement"
@@ -72,7 +73,7 @@ function App() {
               LIKED
             </NavLink>
           </li>
-          <li className="nav-item" onClick={() => setRoute("History")}>
+          <li className="nav-item">
             <NavLink
               to="/History"
               className="NavElement"
@@ -85,34 +86,6 @@ function App() {
           </li>
         </ul>
       </nav>
-      {/* <div className="sideBar">
-        <ul className="sideBar">
-          <li className="" onClick={() => setRoute("videos")}>
-            <NavLink
-              to="/videos"
-              className="NavElement"
-              activeStyle={{
-                fontWeight: "bold",
-              }}
-            >
-              VIDEOS
-            </NavLink>
-          </li>
-          <li className="" onClick={() => setRoute("Playlists")}>
-            <NavLink
-              to="/Playlists"
-              className="NavElement"
-              activeStyle={{
-                fontWeight: "bold",
-              }}
-            >
-              PLAYLISTS
-            </NavLink>
-          </li>
-          <li onClick={() => setRoute("Liked")}>LIKED</li>
-          <li onClick={() => setRoute("History")}>HISTORY</li>
-        </ul>
-      </div> */}
       <div className="main">
         <Routes>
           <Route path="/" element={<VideoListing />} />

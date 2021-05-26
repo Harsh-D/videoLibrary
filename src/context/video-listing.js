@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useHistoryList } from "./history-listing";
 import { usePlaylist } from "./playlist-listing";
 import { NavLink } from "react-router-dom";
@@ -12,7 +12,7 @@ export function useVideoList() {
 
 export function VideoListProvider({ children }) {
   //const [state, dispatch] = useReducer(videoListReducer, { videosInList });
-  const [route, setRoute] = useState("videos");
+  //const [route, setRoute] = useState("videos");
   const [itemToRender, setItemToRender] = useState();
   const [videosInList, setVideosInList] = useState([]);
   //function videoListReducer(state, action) {}
@@ -75,7 +75,6 @@ export function VideoListProvider({ children }) {
               className="button primary-button"
               onClick={() => {
                 historyListDispatch({ type: "ADD_TO_HISTORY", payload: item });
-                setRoute("video");
                 setItemToRender(item);
               }}
             >
@@ -131,7 +130,7 @@ export function VideoListProvider({ children }) {
   }
   return (
     <VideoListContext.Provider
-      value={{ videosInList, setVideosInList, VideoListing, route, setRoute, itemToRender,setItemToRender }}
+      value={{ videosInList, setVideosInList, VideoListing, itemToRender,setItemToRender }}
     >
       {children}
     </VideoListContext.Provider>
