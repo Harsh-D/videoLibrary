@@ -13,7 +13,7 @@ export function LikedListProvider({ children }) {
       <div className="component-container card-div">
         {state.likedVideos.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className="card"
             style={{
               border: "1px ",
@@ -48,13 +48,13 @@ function likedListReducer(state, action) {
   switch (action.type) {
     case "ADD_TO_LIKED_VIDEOS":
       if (
-        state.likedVideos.filter((item) => item.id === action.payload.id)
+        state.likedVideos.filter((item) => item._id === action.payload._id)
           .length > 0
       ) {
         return {
           ...state,
           likedVideos: state.likedVideos.map((item) =>
-            item.id === action.payload.id
+            item._id === action.payload._id
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )

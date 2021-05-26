@@ -17,7 +17,7 @@ export function VideoPageProvider({ children }) {
       <div className="component-container card-div">
         
         <div
-          key={itemToRender.id}
+          key={itemToRender._id}
           onClick={() => console.log("clicked")}
           className="card"
           style={{
@@ -29,7 +29,7 @@ export function VideoPageProvider({ children }) {
         >
           <iframe
             disabled
-            title={itemToRender.id}
+            title={itemToRender._id}
             width="100%"
             height="400vh"
             src={itemToRender.url}

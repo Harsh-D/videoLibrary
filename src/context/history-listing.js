@@ -15,7 +15,7 @@ export function HistoryListProvider({ children }) {
       <div className="component-container card-div">
         {state.watchedVideos.map((item) => (
           <div
-            key={item.id}
+            key={item._id}
             className="card"
             style={{
               border: "1px ",
@@ -55,7 +55,7 @@ function historyListReducer(state, action) {
   switch (action.type) {
     case "ADD_TO_HISTORY":
       if (
-        state.watchedVideos.filter((item) => item.id === action.payload.id)
+        state.watchedVideos.filter((item) => item._id === action.payload._id)
           .length > 0
       ) {
         return {
